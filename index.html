@@ -3,104 +3,967 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Un Viaje Poético</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,400&display=swap" rel="stylesheet">
-</head>
-<body>
-
-    <canvas id="starfield"></canvas>
-
-    <div class="scroll-indicator">
-        <span>Desliza</span>
-        <div class="line"></div>
-    </div>
-
-    <main>
-        <section class="chapter show">
-            <h1 class="main-title">El Inicio</h1>
-            <p>Todo comienza con una palabra suspendida en el vacío.</p>
-        </section>
-
-        <section class="chapter">
-            <h2>El Silencio</h2>
-            <p>Entre el ruido del mundo digital,<br>encontramos un espacio para respirar.</p>
-            <p class="highlight">La calma es revolucionaria.</p>
-        </section>
-
-        <section class="chapter">
-            <h2>La Conexión</h2>
-            <p>No son solo píxeles.</p>
-            <p>Son pensamientos viajando a la velocidad de la luz<br>para encontrarse contigo.</p>
-        </section>
-
-        <section class="chapter">
-            <h2>El Destino</h2>
-            <p>Has llegado al final del comienzo.</p>
-            <button class="cta-button" onclick="window.location.reload()">Reiniciar el Viaje</button>
-        </section>
-    </main>
-
-    <script>
-        // --- 1. ANIMACIÓN DE APARICIÓN AL SCROLL (Observer) ---
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('show');
-                } else {
-                    entry.target.classList.remove('show'); // Quita esto si no quieres que desaparezca al subir
-                }
-            });
-        }, { threshold: 0.5 }); // Se activa cuando el 50% del elemento es visible
-
-        document.querySelectorAll('.chapter').forEach((el) => observer.observe(el));
-
-        // --- 2. FONDO DE ESTRELLAS (CANVAS) ---
-        const canvas = document.getElementById('starfield');
-        const ctx = canvas.getContext('2d');
-        let width, height;
-        let stars = [];
-
-        function resize() {
-            width = window.innerWidth;
-            height = window.innerHeight;
-            canvas.width = width;
-            canvas.height = height;
-            initStars();
+    <meta name="description" content="Voces de un amor no correspondido - La anatomía de la espera. Libro de poesía de Ariel Vera.">
+    <meta name="author" content="Ariel Vera">
+    <title>Ariel Vera | Voces de un amor no correspondido</title>
+    
+    <style>
+        /* ============================================
+           RESET Y BASE
+           ============================================ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        function initStars() {
-            stars = [];
-            for (let i = 0; i < 200; i++) {
-                stars.push({
-                    x: Math.random() * width,
-                    y: Math.random() * height,
-                    size: Math.random() * 2,
-                    speed: Math.random() * 0.5 + 0.1
-                });
+        :root {
+            --color-night: #1A2B3C;
+            --color-bone: #F9F7F1;
+            --color-gold: #D4AF37;
+            --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: var(--color-night);
+            color: var(--color-bone);
+            overflow-x: hidden;
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* ============================================
+           HERO SECTION
+           ============================================ */
+        .hero-section {
+            position: relative;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .hero-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.4) contrast(1.1);
+        }
+
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, rgba(26, 43, 60, 0.3) 0%, rgba(26, 43, 60, 0.8) 100%);
+            z-index: 2;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            padding: 2rem;
+            max-width: 900px;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            color: var(--color-bone);
+            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            letter-spacing: -0.02em;
+            animation: fadeInUp 1s ease-out forwards;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.125rem, 3vw, 1.5rem);
+            font-weight: 300;
+            color: var(--color-gold);
+            margin-bottom: 1rem;
+            letter-spacing: 0.05em;
+            text-transform: lowercase;
+            font-style: italic;
+            animation: fadeInUp 1s ease-out 0.3s forwards;
+            opacity: 0;
+        }
+
+        .hero-author {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            color: rgba(249, 247, 241, 0.7);
+            margin-bottom: 2.5rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            animation: fadeInUp 1s ease-out 0.3s forwards;
+            opacity: 0;
+        }
+
+        .cta-button {
+            background: var(--color-gold);
+            color: var(--color-night);
+            border: none;
+            border-radius: 50px;
+            padding: 1rem 2.5rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.3);
+            animation: fadeInUp 1s ease-out 0.6s forwards;
+            opacity: 0;
+            text-decoration: none;
+        }
+
+        .cta-button:hover {
+            background: var(--color-bone);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(212, 175, 55, 0.5);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
+        }
+
+        .scroll-line {
+            width: 2px;
+            height: 50px;
+            background: linear-gradient(to bottom, transparent, var(--color-gold));
+            animation: scrollPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
 
-        function animate() {
-            ctx.clearRect(0, 0, width, height);
-            ctx.fillStyle = 'white';
-            
-            stars.forEach(star => {
-                ctx.beginPath();
-                ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
-                ctx.fill();
-                
-                // Mover estrellas hacia arriba suavemente
-                star.y -= star.speed;
-                if (star.y < 0) star.y = height;
-            });
-            
-            requestAnimationFrame(animate);
+        @keyframes scrollPulse {
+            0%, 100% {
+                opacity: 0.3;
+                transform: translateY(0);
+            }
+            50% {
+                opacity: 1;
+                transform: translateY(10px);
+            }
         }
 
-        window.addEventListener('resize', resize);
-        resize();
-        animate();
+        /* ============================================
+           SECCIONES
+           ============================================ */
+        section {
+            padding: 8rem 2rem;
+            position: relative;
+        }
+
+        .section-dark {
+            background: var(--color-night);
+        }
+
+        .section-gradient {
+            background: linear-gradient(180deg, var(--color-night) 0%, #243447 100%);
+        }
+
+        .section-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--color-gold);
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--color-bone);
+            text-align: center;
+            margin-top: 1rem;
+        }
+
+        /* ============================================
+           CARDS DE POEMAS
+           ============================================ */
+        .poems-grid {
+            max-width: 1400px;
+            margin: 4rem auto 0;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .poems-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .poems-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .poem-card {
+            min-height: 400px;
+        }
+
+        .card-glass {
+            height: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 2.5rem;
+            transition: var(--transition-smooth);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-glass::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1) 0%, transparent 50%);
+            opacity: 0;
+            transition: var(--transition-smooth);
+        }
+
+        .poem-card:hover .card-glass {
+            transform: translateY(-8px) scale(1.02);
+            border-color: rgba(212, 175, 55, 0.5);
+            box-shadow: 0 20px 60px rgba(212, 175, 55, 0.2);
+        }
+
+        .poem-card:hover .card-glass::before {
+            opacity: 1;
+        }
+
+        .card-icon {
+            color: var(--color-gold);
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+            transition: var(--transition-fast);
+        }
+
+        .poem-card:hover .card-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .card-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--color-bone);
+        }
+
+        .poem-text {
+            font-size: 1rem;
+            font-style: italic;
+            line-height: 1.8;
+            color: rgba(249, 247, 241, 0.9);
+            flex: 1;
+        }
+
+        /* ============================================
+           BLOG CARDS
+           ============================================ */
+        .blog-grid {
+            max-width: 1400px;
+            margin: 4rem auto 3rem;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            .blog-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .blog-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .blog-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: var(--transition-smooth);
+            cursor: pointer;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(212, 175, 55, 0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        .blog-image-wrapper {
+            position: relative;
+            width: 100%;
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .blog-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition-smooth);
+        }
+
+        .blog-card:hover .blog-image {
+            transform: scale(1.1);
+        }
+
+        .blog-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(180deg, transparent 0%, rgba(26, 43, 60, 0.8) 100%);
+        }
+
+        .blog-content {
+            padding: 2rem;
+        }
+
+        .blog-date {
+            color: var(--color-gold);
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 0.75rem;
+        }
+
+        .blog-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--color-bone);
+            margin-bottom: 0.75rem;
+            line-height: 1.3;
+        }
+
+        .blog-description {
+            font-size: 1rem;
+            line-height: 1.6;
+            color: rgba(249, 247, 241, 0.7);
+            margin-bottom: 1.5rem;
+        }
+
+        .blog-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--color-gold);
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition-fast);
+        }
+
+        .blog-link:hover {
+            text-decoration: underline;
+            gap: 0.75rem;
+        }
+
+        .blog-cta {
+            text-align: center;
+        }
+
+        .cta-secondary {
+            background: transparent;
+            color: var(--color-gold);
+            border: 2px solid var(--color-gold);
+        }
+
+        .cta-secondary:hover {
+            background: var(--color-gold);
+            color: var(--color-night);
+        }
+
+        /* ============================================
+           AUTOR SECTION
+           ============================================ */
+        .author-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        @media (min-width: 768px) {
+            .author-container {
+                grid-template-columns: 300px 1fr;
+            }
+        }
+
+        .author-image-wrapper {
+            position: relative;
+            display: flex;
+            justify-content: center;
+        }
+
+        .author-image {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--color-gold);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+            transition: var(--transition-smooth);
+        }
+
+        .author-image:hover {
+            transform: scale(1.05);
+        }
+
+        .author-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(212, 175, 55, 0.3) 0%, transparent 70%);
+            transform: translate(-50%, -50%);
+            z-index: -1;
+            filter: blur(30px);
+        }
+
+        .author-name {
+            font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--color-bone);
+        }
+
+        .author-tagline {
+            font-size: 1.25rem;
+            color: var(--color-gold);
+            font-style: italic;
+            margin-bottom: 1.5rem;
+        }
+
+        .author-bio {
+            font-size: 1.125rem;
+            line-height: 1.7;
+            color: rgba(249, 247, 241, 0.8);
+        }
+
+        /* ============================================
+           CONTACTO SECTION
+           ============================================ */
+        .contact-container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .contact-form {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 3rem;
+            margin: 3rem 0 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-input,
+        .form-textarea {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            padding: 1rem 1.5rem;
+            font-size: 1rem;
+            color: var(--color-bone);
+            transition: var(--transition-fast);
+            font-family: inherit;
+        }
+
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--color-gold);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .form-input::placeholder,
+        .form-textarea::placeholder {
+            color: rgba(249, 247, 241, 0.4);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        .contact-form button {
+            width: 100%;
+            justify-content: center;
+        }
+
+        .contact-direct {
+            text-align: center;
+        }
+
+        .contact-direct p {
+            color: rgba(249, 247, 241, 0.6);
+            margin-bottom: 0.5rem;
+        }
+
+        .email-link {
+            color: var(--color-gold);
+            font-size: 1.125rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition-fast);
+        }
+
+        .email-link:hover {
+            text-decoration: underline;
+        }
+
+        /* ============================================
+           FOOTER
+           ============================================ */
+        footer {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 3rem 2rem;
+            border-top: 1px solid rgba(212, 175, 55, 0.2);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            align-items: center;
+            text-align: center;
+        }
+
+        @media (min-width: 768px) {
+            .footer-content {
+                flex-direction: row;
+                justify-content: space-between;
+                text-align: left;
+            }
+        }
+
+        .footer-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--color-bone);
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-tagline {
+            color: var(--color-gold);
+            font-size: 0.95rem;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .footer-link {
+            color: rgba(249, 247, 241, 0.7);
+            text-decoration: none;
+            font-size: 0.95rem;
+            transition: var(--transition-fast);
+        }
+
+        .footer-link:hover {
+            color: var(--color-gold);
+            text-decoration: underline;
+        }
+
+        /* ============================================
+           SCROLL REVEAL
+           ============================================ */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: var(--transition-smooth);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ============================================
+           RESPONSIVE
+           ============================================ */
+        @media (max-width: 767px) {
+            section {
+                padding: 4rem 1.5rem;
+            }
+
+            .contact-form {
+                padding: 2rem 1.5rem;
+            }
+
+            .author-image {
+                width: 200px;
+                height: 200px;
+            }
+        }
+
+        /* Icons using Unicode symbols */
+        .icon-quote::before { content: '❝'; }
+        .icon-heart::before { content: '♥'; }
+        .icon-book::before { content: '📖'; }
+        .icon-calendar::before { content: '📅'; }
+        .icon-mail::before { content: '✉'; }
+        .icon-arrow::after { content: ' →'; }
+    </style>
+</head>
+<body>
+    <!-- HERO SECTION -->
+    <section class="hero-section" id="hero">
+        <div class="hero-background">
+            <div class="hero-overlay"></div>
+            <img 
+                src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=1920&q=80" 
+                alt="Fondo dramático"
+                class="hero-image"
+            />
+        </div>
+        <div class="hero-content" id="heroContent">
+            <h1 class="hero-title">
+                Voces de un amor<br />no correspondido
+            </h1>
+            <p class="hero-subtitle">la anatomía de la espera</p>
+            <p class="hero-author">Ariel Vera</p>
+            <a href="#textos" class="cta-button">
+                <span>Explorar la obra</span>
+            </a>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- SELECCIÓN DE TEXTOS -->
+    <section class="section-gradient" id="textos">
+        <div style="text-align: center;">
+            <div class="section-label">
+                <span class="icon-quote"></span>
+                <span>Selección de Textos</span>
+            </div>
+            <h2 class="section-title">Fragmentos elegidos para el silencio</h2>
+        </div>
+        <div class="poems-grid">
+            <div class="poem-card reveal">
+                <div class="card-glass">
+                    <div class="card-icon icon-quote"></div>
+                    <h3 class="card-title">Silencios</h3>
+                    <p class="poem-text">
+                        "Me convertí en un coleccionista de silencios,<br />
+                        guardando cada pausa de tu voz<br />
+                        como si fuera una promesa.<br />
+                        Esperaba que alguno de ellos,<br />
+                        en su mudez infinita,<br />
+                        me dijera que al fin te quedarías."
+                    </p>
+                </div>
+            </div>
+
+            <div class="poem-card reveal">
+                <div class="card-glass">
+                    <div class="card-icon icon-heart"></div>
+                    <h3 class="card-title">Gramática</h3>
+                    <p class="poem-text">
+                        "Aprendí a deletrear tu nombre<br />
+                        en braille sobre mis cicatrices viejas.<br />
+                        Tu voz se volvió un jeroglífico<br />
+                        en la pared de mi cueva de nostalgias.<br />
+                        Ahora solo hablo en subjuntivo:<br />
+                        yo amaría, tú huirías...<br />
+                        nosotros, nunca."
+                    </p>
+                </div>
+            </div>
+
+            <div class="poem-card reveal">
+                <div class="card-glass">
+                    <div class="card-icon icon-book"></div>
+                    <h3 class="card-title">Apuesta</h3>
+                    <p class="poem-text">
+                        "Quise perderme en el laberinto<br />
+                        de tu eterno 'tal vez'.<br />
+                        Jugué en la máquina tragamonedas<br />
+                        de este amor suicida,<br />
+                        apostando mis últimos días,<br />
+                        creyendo que la suerte<br />
+                        era una forma de compromiso."
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BITÁCORA (BLOG) -->
+    <section class="section-dark" id="bitacora">
+        <div style="text-align: center;">
+            <div class="section-label">
+                <span class="icon-calendar"></span>
+                <span>Bitácora</span>
+            </div>
+            <h2 class="section-title">Reflexiones y actualizaciones</h2>
+        </div>
+        <div class="blog-grid">
+            <div class="blog-card reveal">
+                <div class="blog-image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=1973&auto=format&fit=crop" alt="El arte de soltar" class="blog-image" />
+                    <div class="blog-overlay"></div>
+                </div>
+                <div class="blog-content">
+                    <div class="blog-date">14 Enero 2026</div>
+                    <h3 class="blog-title">El arte de soltar lo que nunca tuviste</h3>
+                    <p class="blog-description">Reflexiones sobre el capítulo 4 y por qué duele más el "casi" que el "nunca".</p>
+                    <a href="https://botarro25.github.io/arielvera.github.io/blog.html" target="_blank" class="blog-link">
+                        Leer artículo <span class="icon-arrow"></span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="blog-card reveal">
+                <div class="blog-image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1470549638415-0a0755be0619?q=80&w=2070&auto=format&fit=crop" alt="Playlist bajo la lluvia" class="blog-image" />
+                    <div class="blog-overlay"></div>
+                </div>
+                <div class="blog-content">
+                    <div class="blog-date">10 Enero 2026</div>
+                    <h3 class="blog-title">Playlist para leer bajo la lluvia</h3>
+                    <p class="blog-description">Las canciones que escuchaba mientras escribía los poemas más tristes del libro.</p>
+                    <a href="https://botarro25.github.io/arielvera.github.io/blog.html" target="_blank" class="blog-link">
+                        Leer artículo <span class="icon-arrow"></span>
+                    </a>
+                </div>
+            </div>
+
+            <div class="blog-card reveal">
+                <div class="blog-image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1516979187457-637abb4f9353?q=80&w=2070&auto=format&fit=crop" alt="Novedades del lanzamiento" class="blog-image" />
+                    <div class="blog-overlay"></div>
+                </div>
+                <div class="blog-content">
+                    <div class="blog-date">05 Enero 2026</div>
+                    <h3 class="blog-title">Novedades del lanzamiento</h3>
+                    <p class="blog-description">Detalles sobre la firma de libros y dónde conseguir la edición especial.</p>
+                    <a href="https://botarro25.github.io/arielvera.github.io/blog.html" target="_blank" class="blog-link">
+                        Leer artículo <span class="icon-arrow"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="blog-cta reveal">
+            <a href="https://botarro25.github.io/arielvera.github.io/blog.html" target="_blank" class="cta-button cta-secondary">
+                <span>Ver todo el Blog</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- SOBRE EL AUTOR -->
+    <section class="section-gradient" id="autor">
+        <div class="author-container reveal">
+            <div class="author-image-wrapper">
+                <img 
+                    src="https://botarro25.github.io/arielvera.github.io/perfil.jpg" 
+                    alt="Ariel Vera"
+                    class="author-image"
+                    onerror="this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80';"
+                />
+                <div class="author-glow"></div>
+            </div>
+            <div>
+                <div class="section-label">
+                    <span>Sobre el Autor</span>
+                </div>
+                <h2 class="author-name">Ariel Vera</h2>
+                <p class="author-tagline">Entre la estrategia y la poesía</p>
+                <p class="author-bio">
+                    Estudiante universitario, Ariel escribe para rescatar del olvido las historias que jamás 
+                    llegaron a completarse. Su obsesión es narrar desde el silencio, creando un refugio para 
+                    quienes aman en secreto y conjugan verbos en tiempos imposibles. Este libro es su primera 
+                    confesión pública.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACTO (HABLEMOS) -->
+    <section class="section-dark" id="contacto">
+        <div class="contact-container reveal">
+            <div style="text-align: center;">
+                <div class="section-label">
+                    <span class="icon-mail"></span>
+                    <span>Hablemos</span>
+                </div>
+                <h2 class="section-title">Para prensa, colaboraciones o compartir silencios</h2>
+            </div>
+            <form class="contact-form" id="contactForm">
+                <div class="form-group">
+                    <input 
+                        type="text" 
+                        placeholder="Tu nombre"
+                        name="name"
+                        required
+                        class="form-input"
+                    />
+                </div>
+                <div class="form-group">
+                    <input 
+                        type="email" 
+                        placeholder="Tu email"
+                        name="email"
+                        required
+                        class="form-input"
+                    />
+                </div>
+                <div class="form-group">
+                    <textarea 
+                        placeholder="Tu mensaje"
+                        rows="5"
+                        name="message"
+                        required
+                        class="form-textarea"
+                    ></textarea>
+                </div>
+                <button type="submit" class="cta-button">
+                    <span>Enviar mensaje</span>
+                    <span class="icon-mail"></span>
+                </button>
+            </form>
+            <div class="contact-direct">
+                <p>O escríbeme directamente a:</p>
+                <a href="mailto:arielveraiba@hotmail.com" class="email-link">
+                    arielveraiba@hotmail.com
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-content">
+            <div>
+                <h3 class="footer-title">Voces de un amor no correspondido</h3>
+                <p class="footer-tagline">Ariel Vera © 2025</p>
+            </div>
+            <div class="footer-links">
+                <a href="#textos" class="footer-link">Textos</a>
+                <a href="#bitacora" class="footer-link">Bitácora</a>
+                <a href="#autor" class="footer-link">Autor</a>
+                <a href="#contacto" class="footer-link">Contacto</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        // Parallax effect for hero
+        const heroContent = document.getElementById('heroContent');
+        document.addEventListener('mousemove', (e) => {
+            const x = (e.clientX / window.innerWidth - 0.5) * 20;
+            const y = (e.clientY / window.innerHeight - 0.5) * 20;
+            heroContent.style.transform = `translate(${x}px, ${y}px)`;
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Scroll reveal animation
+        const revealElements = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+
+        // Contact form handler
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const name = this.name.value;
+            const email = this.email.value;
+            const message = this.message.value;
+            const mailtoLink = `mailto:arielveraiba@hotmail.com?subject=Mensaje de ${encodeURIComponent(name)}&body=${encodeURIComponent(message)}%0D%0A%0D%0AEmail de contacto: ${encodeURIComponent(email)}`;
+            window.location.href = mailtoLink;
+        });
     </script>
 </body>
 </html>
