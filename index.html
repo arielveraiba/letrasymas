@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Un Viaje Poético</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,400&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <canvas id="starfield"></canvas>
+
+    <div class="scroll-indicator">
+        <span>Desliza</span>
+        <div class="line"></div>
+    </div>
+
+    <main>
+        <section class="chapter show">
+            <h1 class="main-title">El Inicio</h1>
+            <p>Todo comienza con una palabra suspendida en el vacío.</p>
+        </section>
+
+        <section class="chapter">
+            <h2>El Silencio</h2>
+            <p>Entre el ruido del mundo digital,<br>encontramos un espacio para respirar.</p>
+            <p class="highlight">La calma es revolucionaria.</p>
+        </section>
+
+        <section class="chapter">
+            <h2>La Conexión</h2>
+            <p>No son solo píxeles.</p>
+            <p>Son pensamientos viajando a la velocidad de la luz<br>para encontrarse contigo.</p>
+        </section>
+
+        <section class="chapter">
+            <h2>El Destino</h2>
+            <p>Has llegado al final del comienzo.</p>
+            <button class="cta-button" onclick="window.location.reload()">Reiniciar el Viaje</button>
+        </section>
+    </main>
+
+    <script>
+        // --- 1. ANIMACIÓN DE APARICIÓN AL SCROLL (Observer) ---
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                } else {
+                    entry.target.classList.remove('show'); // Quita esto si no quieres que desaparezca al subir
+                }
+            });
+        }, { threshold: 0.5 }); // Se activa cuando el 50% del elemento es visible
+
+        document.querySelectorAll('.chapter').forEach((el) => observer.observe(el));
+
+        // --- 2. FONDO DE ESTRELLAS (CANVAS) ---
+        const canvas = document.getElementById('starfield');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let stars = [];
+
+        function resize() {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+            initStars();
+        }
+
+        function initStars() {
+            stars = [];
+            for (let i = 0; i < 200; i++) {
+                stars.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    size: Math.random() * 2,
+                    speed: Math.random() * 0.5 + 0.1
+                });
+            }
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, width, height);
+            ctx.fillStyle = 'white';
+            
+            stars.forEach(star => {
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+                ctx.fill();
+                
+                // Mover estrellas hacia arriba suavemente
+                star.y -= star.speed;
+                if (star.y < 0) star.y = height;
+            });
+            
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+        animate();
+    </script>
+</body>
+</html>
