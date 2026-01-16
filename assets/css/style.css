@@ -1,0 +1,110 @@
+:root {
+  --bg-main: #1A2B3C;
+  --bg-soft: #233549;
+  --text-main: #F9F7F1;
+  --accent: #D4AF37;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  font-family: 'Inter', sans-serif;
+  line-height: 1.7;
+}
+
+/* HERO */
+.hero img {
+  width: 100%;
+  height: 90vh;
+  object-fit: cover;
+}
+
+/* SECCIONES */
+.section {
+  padding: 90px 8%;
+}
+
+/* EL LIBRO */
+.libro {
+  display: flex;
+  gap: 70px;
+  align-items: center;
+}
+
+.libro-img img {
+  width: 220px;
+}
+
+.libro-texto h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.3rem;
+  margin-bottom: 20px;
+}
+
+.btn {
+  display: inline-block;
+  margin-top: 30px;
+  padding: 14px 36px;
+  background-color: var(--accent);
+  color: #1A2B3C;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+/* FRAGMENTOS */
+.fragmentos {
+  background-color: var(--bg-soft);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 50px;
+}
+
+.fragmento h3 {
+  color: var(--accent);
+  margin-bottom: 12px;
+  font-family: 'Playfair Display', serif;
+}
+
+/* AUTOR */
+.autor {
+  display: flex;
+  gap: 70px;
+  align-items: center;
+}
+
+.autor-texto h2 {
+  font-family: 'Playfair Display', serif;
+  margin-bottom: 20px;
+}
+
+.autor-img img {
+  width: 260px;
+  border-radius: 4px;
+}
+
+/* FOOTER */
+footer {
+  text-align: center;
+  padding: 40px;
+  font-size: 0.85rem;
+  opacity: 0.8;
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .libro,
+  .autor {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .fragmentos {
+    grid-template-columns: 1fr;
+  }
+}
