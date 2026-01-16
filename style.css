@@ -15,111 +15,101 @@ body {
   background: var(--bg);
   color: var(--text);
   font-family: 'Inter', sans-serif;
-  line-height: 1.7;
+  overflow-x: hidden;
 }
 
 /* HERO */
-.hero img {
-  width: 100%;
-  height: 90vh;
-  object-fit: cover;
+.hero {
+  height: 100vh;
+  background: linear-gradient(rgba(26,43,60,.6), rgba(26,43,60,.9)),
+              url("PON_TU_IMAGEN_HERO_AQUI") center/cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-overlay {
+  text-align: center;
+}
+
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 3.5rem;
+}
+
+.hero p {
+  margin-top: 15px;
+  opacity: .8;
 }
 
 /* SECCIONES */
 .section {
-  padding: 80px 10%;
+  padding: 100px 12%;
+  text-align: center;
+}
+
+/* MANIFIESTO */
+.manifesto {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  opacity: .9;
 }
 
 /* LIBRO */
-.libro {
-  display: flex;
-  gap: 60px;
-  align-items: center;
-}
-
-.libro-img {
-  width: 220px;
-}
-
-.libro-texto h2 {
-  font-family: 'Playfair Display', serif;
-  font-size: 2.3rem;
-  margin-bottom: 20px;
+.libro-card {
+  background: var(--bg-soft);
+  padding: 60px;
+  display: inline-block;
+  border: 1px solid rgba(255,255,255,.08);
 }
 
 .btn {
   display: inline-block;
   margin-top: 30px;
-  padding: 14px 36px;
+  padding: 14px 40px;
   background: var(--accent);
   color: #1A2B3C;
   text-decoration: none;
   font-weight: 600;
 }
 
-/* FRAGMENTOS */
-.fragmentos {
-  background: var(--bg-soft);
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 40px;
+/* POEMAS */
+.poema {
+  border-top: 1px solid rgba(255,255,255,.1);
+  padding: 30px 0;
+  cursor: pointer;
 }
 
-.fragmento h3 {
-  font-family: 'Playfair Display', serif;
+.poema h3 {
   color: var(--accent);
-  margin-bottom: 10px;
+  font-family: 'Playfair Display', serif;
 }
 
-/* AUTOR */
-.autor {
-  display: flex;
-  gap: 60px;
-  align-items: center;
+.poema p {
+  margin-top: 20px;
+  font-size: 1rem;
+  line-height: 1.7;
 }
 
-.autor-img {
-  width: 260px;
-  border-radius: 4px;
+.hidden {
+  display: none;
+}
+
+/* REVEAL */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 1s ease;
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* FOOTER */
 footer {
-  text-align: center;
   padding: 40px;
-  font-size: 0.85rem;
-  opacity: 0.8;
-}
-
-/* ANIMACIONES */
-@keyframes fadeUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate {
-  animation: fadeUp 1.2s ease forwards;
-}
-
-.delay-1 { animation-delay: .2s; }
-.delay-2 { animation-delay: .4s; }
-.delay-3 { animation-delay: .6s; }
-
-/* RESPONSIVE */
-@media (max-width: 900px) {
-  .libro,
-  .autor {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .fragmentos {
-    grid-template-columns: 1fr;
-  }
+  text-align: center;
+  opacity: .6;
 }
