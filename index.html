@@ -1,46 +1,283 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ariel Vera | Letras & Más</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ariel Vera | Escritor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        /* --- PALETA DE COLORES ELEGANTE --- */
+        :root {
+            --bg: #fdfbf7;           /* Crema papel */
+            --text: #1a1a1a;         /* Negro suave */
+            --gold: #c9a227;         /* Dorado */
+            --gold-light: #e6c86e;   /* Dorado claro para fondos */
+            --white: #ffffff;
+        }
 
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Lora', serif; background-color: var(--bg); color: var(--text); margin: 0; padding: 0; line-height: 1.8; overflow-x: hidden; }
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        
+        /* --- ANIMACIONES --- */
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+        .animate { opacity: 0; animation: fadeUp 1s ease-out forwards; }
+        .delay-1 { animation-delay: 0.2s; }
+        .delay-2 { animation-delay: 0.4s; }
+        .delay-3 { animation-delay: 0.6s; }
+
+        /* NAV */
+        nav { 
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 0 5%; background: rgba(255,255,255,0.98); height: 80px; 
+            position: sticky; top: 0; z-index: 1000;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+        .logo { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 900; letter-spacing: -1px; }
+        .menu-links { display: flex; gap: 30px; }
+        .menu-links a { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; color: #444; }
+        .menu-links a:hover { color: var(--gold); }
+        .btn-nav { border: 1px solid var(--text); padding: 8px 20px; color: var(--text) !important; }
+        .btn-nav:hover { background: var(--text); color: var(--white) !important; }
+
+        /* HERO (PORTADA) - ARREGLADO */
+        .hero { 
+            min-height: 100vh; 
+            display: flex; align-items: center; justify-content: center; 
+            /* Fondo oscuro elegante */
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1519681393784-d8e5b5a45742?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover; background-attachment: fixed;
+            padding: 100px 5%; color: var(--white);
+        }
+        .hero-container { 
+            display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 60px; max-width: 1200px;
+        }
+        /* Aquí está la imagen de portada que faltaba */
+        .hero-book { 
+            flex: 1; min-width: 300px; text-align: center; 
+        }
+        .hero-book img { 
+            max-width: 350px; width: 100%; 
+            box-shadow: -20px 20px 60px rgba(0,0,0,0.5); /* Sombra realista */
+            border: 1px solid rgba(255,255,255,0.2);
+            transform: rotate(-2deg); /* Ligera inclinación para realismo */
+            transition: 0.5s;
+        }
+        .hero-book img:hover { transform: rotate(0deg) scale(1.02); }
+
+        .hero-text { flex: 1.2; min-width: 300px; text-align: left; }
+        h1 { font-family: 'Playfair Display', serif; font-size: 4rem; line-height: 1.1; margin-bottom: 20px; font-weight: 900; }
+        .hero-subtitle { font-size: 1.2rem; margin-bottom: 40px; opacity: 0.9; font-weight: 300; border-left: 3px solid var(--gold); padding-left: 20px; }
+        
+        .btn { padding: 18px 40px; text-transform: uppercase; letter-spacing: 2px; font-weight: 800; font-size: 0.8rem; border: none; cursor: pointer; display: inline-block; margin-right: 15px; margin-bottom: 15px; transition: 0.3s; }
+        .btn-gold { background: var(--gold); color: #fff; }
+        .btn-gold:hover { background: #fff; color: var(--gold); transform: translateY(-3px); }
+        .btn-outline { border: 2px solid #fff; color: #fff; background: transparent; }
+        .btn-outline:hover { background: #fff; color: #000; transform: translateY(-3px); }
+
+        /* SECCIÓN POEMAS - DISEÑO CON LÍNEAS */
+        section { padding: 100px 10%; }
+        .section-header { text-align: center; margin-bottom: 70px; }
+        .section-title { font-family: 'Playfair Display', serif; font-size: 3rem; margin-bottom: 10px; }
+        .line-separator { width: 80px; height: 3px; background: var(--gold); margin: 20px auto; }
+
+        .poems-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 40px; }
+        .poem-card { 
+            background: var(--white); 
+            padding: 50px 30px; 
+            /* Diseño con líneas: Borde completo y borde superior grueso */
+            border: 1px solid #e0e0e0; 
+            border-top: 5px solid var(--text); 
+            position: relative;
+            transition: 0.4s;
+        }
+        .poem-card:hover { 
+            border-top-color: var(--gold); 
+            transform: translateY(-10px); 
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1); 
+        }
+        /* Línea decorativa vertical dentro del poema */
+        .poem-content { border-left: 1px solid var(--gold); padding-left: 25px; margin-top: 20px; }
+        .poem-title { font-family: 'Playfair Display'; font-size: 1.8rem; font-weight: 700; }
+        .poem-verse { font-style: italic; color: #555; font-size: 1.1rem; }
+
+        /* SECCIÓN BLOG - AHORA CON CONTENIDO */
+        .blog-section { background: #f4f4f4; }
+        .blog-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        
+        .blog-card { background: var(--white); transition: 0.3s; border-bottom: 3px solid transparent; }
+        .blog-card:hover { border-bottom-color: var(--gold); transform: translateY(-5px); }
+        .blog-img { height: 200px; width: 100%; object-fit: cover; background: #ddd; }
+        .blog-info { padding: 30px; }
+        .blog-date { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; color: #888; }
+        .blog-title { font-family: 'Playfair Display'; font-size: 1.4rem; margin: 10px 0; font-weight: 700; }
+        .read-link { text-transform: uppercase; font-size: 0.75rem; font-weight: 800; letter-spacing: 1px; border-bottom: 2px solid var(--gold); padding-bottom: 3px; }
+
+        /* BIO & CONTACTO */
+        .bio-section { display: flex; gap: 60px; align-items: center; }
+        .bio-img { width: 100%; max-width: 400px; box-shadow: 20px 20px 0 var(--gold); }
+        
+        .contact-section { text-align: center; background: var(--text); color: var(--white); }
+        .contact-email { font-size: 2rem; border-bottom: 2px solid var(--gold); padding-bottom: 5px; font-family: 'Playfair Display'; }
+
+        footer { background: #000; color: #666; text-align: center; padding: 60px 20px; border-top: 1px solid #222; font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase;}
+
+        @media (max-width: 800px) {
+            h1 { font-size: 2.8rem; }
+            .hero-container, .bio-section { flex-direction: column; text-align: center; }
+            .menu-links { display: none; }
+            .hero-text { text-align: center; }
+            .hero-subtitle { border-left: none; padding: 0; }
+        }
+    </style>
 </head>
-
 <body>
 
-<!-- CURSOR POÉTICO -->
-<div class="cursor"></div>
+    <nav>
+        <div class="logo">Ariel Vera</div>
+        <div class="menu-links">
+            <a href="index.html">Inicio</a>
+            <a href="#libro">Libro</a>
+            <a href="#poemas">Poesía</a>
+            <a href="blog.html" class="btn-nav">Blog</a>
+        </div>
+    </nav>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-overlay">
-    <h1>Ariel Vera</h1>
-    <p>Escribo lo que no se quedó</p>
-  </div>
-</section>
+    <header class="hero" id="inicio">
+        <div class="hero-container animate">
+            <div class="hero-book">
+                <img src="portada.jpg" alt="Portada Libro">
+            </div>
+            <div class="hero-text">
+                <p style="text-transform: uppercase; letter-spacing: 4px; color: var(--gold); font-weight: bold; margin-bottom: 10px;">Ya disponible</p>
+                <h1>Voces de un amor<br>no correspondido</h1>
+                <div class="hero-subtitle">
+                    "Una obra visceral sobre todo aquello que callamos para no perder a quien nunca fue nuestro. La anatomía de la espera y el silencio."
+                </div>
+                <div style="margin-top: 30px;">
+                    <a href="https://kdp.amazon.com/amazon-dp-action/us/dualbookshelf.marketplacelink/B0FQ512K9W" class="btn btn-gold">Comprar en Amazon</a>
+    
+                </div>
+            </div>
+        </div>
+    </header>
 
-<!-- MANIFIESTO -->
-<section class="section manifesto reveal">
-  <p>
-    No escribo para convencer.  
-    Escribo para no perder lo que ya se fue.
-  </p>
-</section>
+    <section id="poemas">
+        <div class="section-header animate delay-1">
+            <h2 class="section-title">Selección de Textos</h2>
+            <div class="line-separator"></div>
+            <p>Fragmentos elegidos para el silencio.</p>
+        </div>
 
-<!-- LIBRO -->
-<section class="section libro reveal">
-  <div class="libro-card">
-    <h2>Voces de un amor no correspondido</h2>
-    <p>
-      Esto no es un libro.  
-      Es el registro contable de una derrota emocional.
-    </p>
+        <div class="poems-grid">
+            <div class="poem-card animate delay-2">
+                <div class="poem-title">Silencios</div>
+                <div class="poem-content">
+                    <p class="poem-verse">
+                        "Me convertí en un coleccionista de silencios,<br>
+                        guardando cada pausa de tu voz<br>
+                        como si fuera una promesa.<br>
+                        Esperaba que alguno de ellos,<br>
+                        en su mudez infinita,<br>
+                        me dijera que al fin te quedarías."
+                    </p>
+                </div>
+            </div>
+            
+            <div class="poem-card animate delay-3">
+                <div class="poem-title">Gramática</div>
+                <div class="poem-content">
+                    <p class="poem-verse">
+                        "Aprendí a deletrear tu nombre<br>
+                        en braille sobre mis cicatrices viejas.<br>
+                        Tu voz se volvió un jeroglífico<br>
+                        en la pared de mi cueva de nostalgias.<br>
+                        Ahora solo hablo en subjuntivo:<br>
+                        yo amaría, tú huirías...<br>
+                        nosotros, nunca."
+                    </p>
+                </div>
+            </div>
 
-    <a href="https://www.amazon.com/dp/TU_ASIN_AQUI" target="_blank" class="btn">
-      Comprar en Amazon
-    </a>
-  </div>
-</se
+            <div class="poem-card animate delay-2">
+                <div class="poem-title">Apuesta</div>
+                <div class="poem-content">
+                    <p class="poem-verse">
+                        "Quise perderme en el laberinto<br>
+                        de tu eterno 'tal vez'.<br>
+                        Jugué en la máquina tragamonedas<br>
+                        de este amor suicida,<br>
+                        apostando mis últimos días,<br>
+                        creyendo que la suerte<br>
+                        era una forma de compromiso."
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="blog-section" id="blog-preview">
+        <div class="section-header">
+            <h2 class="section-title">Bitácora</h2>
+            <div class="line-separator"></div>
+        </div>
+        <div class="blog-grid">
+            <article class="blog-card animate">
+                <img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?q=80&w=1973&auto=format&fit=crop" class="blog-img" alt="Blog 1">
+                <div class="blog-info">
+                    <span class="blog-date">14 Enero 2026</span>
+                    <h3 class="blog-title">El arte de soltar lo que nunca tuviste</h3>
+                    <p style="font-size: 0.9rem; margin-bottom: 20px;">Reflexiones sobre el capítulo 4 y por qué duele más el "casi" que el "nunca".</p>
+                    <a href="blog.html" class="read-link">Leer artículo</a>
+                </div>
+            </article>
+            <article class="blog-card animate delay-1">
+                <img src="https://images.unsplash.com/photo-1470549638415-0a0755be0619?q=80&w=2070&auto=format&fit=crop" class="blog-img" alt="Blog 2">
+                <div class="blog-info">
+                    <span class="blog-date">10 Enero 2026</span>
+                    <h3 class="blog-title">Playlist para leer bajo la lluvia</h3>
+                    <p style="font-size: 0.9rem; margin-bottom: 20px;">Las canciones que escuchaba mientras escribía los poemas más tristes del libro.</p>
+                    <a href="blog.html" class="read-link">Leer artículo</a>
+                </div>
+           
+            </article>
+        </div>
+        <div style="text-align: center; margin-top: 50px;">
+            <a href="blog.html" class="btn btn-outline" style="border-color: #000; color: #000;">Ver todo el Blog</a>
+        </div>
+    </section>
+
+    <section class="bio-section" id="autor">
+        <div style="flex: 1;" class="animate">
+            <h2 class="section-title" style="text-align: left;">Sobre el Autor</h2>
+            <div class="line-separator" style="margin: 20px 0;"></div>
+            <p style="margin-bottom: 20px;">
+                Entre la estrategia y la poesía. Estudiante universitario, Ariel escribe para rescatar del olvido las historias que jamás llegaron a completarse.
+            </p>
+            <p>
+                Su obsesión es narrar desde el silencio, creando un refugio para quienes aman en secreto y conjugan verbos en tiempos imposibles. Este libro es su primera confesión pública.
+            </p>
+        </div>
+        <div style="flex: 1; text-align: center;" class="animate delay-1">
+        <img src="perfil.jpg" alt="Ariel Vera" class="bio-img">        
+        </div>
+    </section>
+
+    <section class="contact-section" id="contacto">
+        <h2 class="section-title" style="color: #fff; margin-bottom: 20px;">Hablemos</h2>
+        <p style="margin-bottom: 30px;">Para prensa, colaboraciones o compartir silencios.</p>
+        <a href="mailto:arielveraiba@hotmail.com" class="contact-email">arielveraiba@hotmail.com</a>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Ariel Vera. Todos los derechos reservados.</p>
+        <div style="margin-top: 20px; font-size: 1.2rem;">
+            <a href="#" style="margin: 0 10px;"><i class="fab fa-instagram"></i></a>
+            <a href="#" style="margin: 0 10px;"><i class="fab fa-tiktok"></i></a>
+        </div>
+    </footer>
+
+</body>
+</html>
