@@ -574,6 +574,7 @@ footer {
     background: rgba(0, 0, 0, 0.3);
     padding: 3rem 2rem;
     border-top: 1px solid rgba(212, 175, 55, 0.2);
+    margin-top: 8rem; /* <--- ESTA ES LA CLAVE: Lo separa mucho más del contenido de arriba */
 }
 
 .footer-content {
