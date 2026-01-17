@@ -667,15 +667,16 @@ footer {
 .icon-arrow::after { content: ' →'; }
 
 /* ================= MENÚ SUPERIOR ================= */
+/* ================= MENÚ SUPERIOR ================= */
 .top-nav {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    /* AQUÍ ARREGLÉ LOS ESPACIOS Y LA ALINEACIÓN */
     padding: 40px 60px;
     display: flex;
     justify-content: flex-end !important; /* Manda a la derecha */
+    align-items: center; /* <--- ¡ESTA LÍNEA ES LA QUE LOS ALINEA PERFECTO! */
     gap: 3rem;
     z-index: 1000;
 }
