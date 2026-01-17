@@ -668,39 +668,39 @@
     </style>
 /* ================= MENÚ SUPERIOR ================= */
 .top-nav {
-    position: absolute; /* Flota sobre el fondo */
+    position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     padding: 2rem;
     display: flex;
-    justify-content: center; /* Centrado (o usa flex-end para derecha) */
-    gap: 2.5rem; /* Espacio entre palabras */
-    z-index: 1000; /* Para que esté siempre encima de todo */
+    justify-content: center; /* Centra los botones */
+    gap: 2.5rem; /* Espacio entre ellos */
+    z-index: 1000;
 }
 
 .nav-link {
-    color: var(--color-bone);
-    text-decoration: none;
+    color: #F9F7F1; /* Color blanco hueso directo */
+    text-decoration: none; /* Quita el subrayado feo */
     font-size: 0.9rem;
     text-transform: uppercase;
     letter-spacing: 0.15em;
     font-weight: 600;
     transition: color 0.3s ease;
     opacity: 0.8;
+    font-family: sans-serif; /* Asegura una fuente limpia */
 }
 
 .nav-link:hover {
-    color: var(--color-gold);
+    color: #D4AF37; /* Color dorado al pasar el mouse */
     opacity: 1;
-    text-decoration: none; /* Quita el subrayado si sale */
 }
 
-/* Ajuste para móviles */
+/* Ajuste para celulares */
 @media (max-width: 768px) {
     .top-nav {
-        padding: 1.5rem;
+        padding: 1rem;
         gap: 1rem;
-        font-size: 0.8rem;
+        font-size: 0.75rem;
     }
 }
