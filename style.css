@@ -666,3 +666,41 @@
         .icon-mail::before { content: '✉'; }
         .icon-arrow::after { content: ' →'; }
     </style>
+/* ================= MENÚ SUPERIOR ================= */
+.top-nav {
+    position: absolute; /* Flota sobre el fondo */
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding: 2rem;
+    display: flex;
+    justify-content: center; /* Centrado (o usa flex-end para derecha) */
+    gap: 2.5rem; /* Espacio entre palabras */
+    z-index: 1000; /* Para que esté siempre encima de todo */
+}
+
+.nav-link {
+    color: var(--color-bone);
+    text-decoration: none;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    font-weight: 600;
+    transition: color 0.3s ease;
+    opacity: 0.8;
+}
+
+.nav-link:hover {
+    color: var(--color-gold);
+    opacity: 1;
+    text-decoration: none; /* Quita el subrayado si sale */
+}
+
+/* Ajuste para móviles */
+@media (max-width: 768px) {
+    .top-nav {
+        padding: 1.5rem;
+        gap: 1rem;
+        font-size: 0.8rem;
+    }
+}
