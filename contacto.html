@@ -109,15 +109,15 @@
 
         revealElements.forEach(el => revealObserver.observe(el));
 
-        // Contact form handler
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const name = this.name.value;
-            const email = this.email.value;
-            const message = this.message.value;
-            const mailtoLink = `mailto:arielveraiba@hotmail.com?subject=Mensaje de ${encodeURIComponent(name)}&body=${encodeURIComponent(message)}%0D%0A%0D%0AEmail de contacto: ${encodeURIComponent(email)}`;
-            window.location.href = mailtoLink;
-        });
+       // Contact form handler
+document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const name = this.name.value;
+    const email = this.email.value;
+    const message = this.message.value;
+    const mailtoLink = `mailto:arielveraiba@hotmail.com?subject=Mensaje de ${encodeURIComponent(name)}&body=${encodeURIComponent(message)}%0D%0A%0D%0AEmail de contacto: ${encodeURIComponent(email)}`;
+    window.location.href = mailtoLink;
+});
     </script>
 </body>
 </html>
