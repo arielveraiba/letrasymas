@@ -674,7 +674,7 @@ text-align: center;
     width: 100%;
     padding: 2rem 4rem;
     display: flex;
-    justify-content: flex-end !important; /* El !important fuerza el cambio */
+    justify-content: right !important; /* El !important fuerza el cambio */
     gap: 3rem;
     z-index: 1000;
     border: 2px solid red; /* PARA VER EL TAMAÑO */
@@ -703,4 +703,18 @@ text-align: center;
         gap: 1rem;
         font-size: 0.75rem;
     }
+}
+/* Estilo especial para el botón de Compra */
+.nav-buy {
+    border: 1px solid #D4AF37; /* Borde dorado */
+    padding: 0.5rem 1.5rem;    /* Relleno para que tenga forma de botón */
+    border-radius: 50px;       /* Bordes redondeados */
+    color: #D4AF37 !important; /* Letra dorada obligatoria */
+    transition: all 0.3s ease;
+}
+
+.nav-buy:hover {
+    background-color: #D4AF37; /* Fondo dorado al pasar el mouse */
+    color: #000 !important;    /* Letra negra para contraste */
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.5); /* Brillo */
 }
