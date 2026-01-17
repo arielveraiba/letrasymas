@@ -667,15 +667,15 @@
         .icon-arrow::after { content: ' →'; }
     </style>
 /* ================= MENÚ SUPERIOR ================= */
-.top-nav .top-nav {
+.top-nav {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    padding: 2rem 4rem; /* 2rem arriba/abajo, 4rem a los lados para que no se pegue al borde */
+    padding: 2rem 4rem; 
     display: flex;
-    justify-content: flex-end; /* ESTO LO MUEVE A LA DERECHA */
-    gap: 4rem; /* ESTO LOS SEPARA MÁS (antes era 2.5rem) */
+    justify-content: flex-end; 
+    gap: 4rem; 
     z-index: 1000;
 }
 .nav-link {
