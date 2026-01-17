@@ -672,11 +672,12 @@ text-align: center;
     top: 0;
     left: 0;
     width: 100%;
-    padding: 2rem 4rem; /* Margen para que no quede pegado al borde */
+    padding: 2rem 4rem;
     display: flex;
-    justify-content: flex-end; /* <--- ESTO LO MANDA A LA DERECHA */
-    gap: 3rem; /* Espacio entre cada palabra */
+    justify-content: flex-end !important; /* El !important fuerza el cambio */
+    gap: 3rem;
     z-index: 1000;
+    border: 2px solid red; /* PARA VER EL TAMAÑO */
 }
 .nav-link {
     color: #F9F7F1; /* Color blanco hueso directo */
