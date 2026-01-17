@@ -667,18 +667,17 @@
         .icon-arrow::after { content: ' →'; }
     </style>
 /* ================= MENÚ SUPERIOR ================= */
-.top-nav {
+.top-nav .top-nav {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
-    padding: 2rem;
+    padding: 2rem 4rem; /* 2rem arriba/abajo, 4rem a los lados para que no se pegue al borde */
     display: flex;
-    justify-content: center; /* Centra los botones */
-    gap: 2.5rem; /* Espacio entre ellos */
+    justify-content: flex-end; /* ESTO LO MUEVE A LA DERECHA */
+    gap: 4rem; /* ESTO LOS SEPARA MÁS (antes era 2.5rem) */
     z-index: 1000;
 }
-
 .nav-link {
     color: #F9F7F1; /* Color blanco hueso directo */
     text-decoration: none; /* Quita el subrayado feo */
